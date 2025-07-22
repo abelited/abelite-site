@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Your Appointment</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #ffc107;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .success, .error {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Book Your Appointment</h2>
+    <form id="booking-form">
+      <label>Name</label>
+      <input type="text" name="customer_name" required />
+
+      <label>Email</label>
+      <input type="email" name="customer_email" required />
+
+      <label>Phone</label>
+      <input type="text" name="customer_phone" required />
+
+      <label>Service</label>
+      <select name="service" required>
+        <option value="basic-exterior">Basic Exterior</option>
+        <option value="plus-exterior">Plus Exterior</option>
+        <option value="interior-detail">Interior Detail</option>
+      </select>
+
+      <label>Vehicle Type</label>
+      <select name="vehicleType" required>
+        <option value="sedan">Sedan</option>
+        <option value="SUV">SUV</option>
+        <option value="truck">Truck</option>
+      </select>
+
+      <label>Date</label>
+      <input type="date" name="date" required />
+
+      <label>Time</label>
+      <input type="time" name="time" required />
+
+      <label>Address</label>
+      <input type="text" name="customer_address" />
+
+      <label>Notes</label>
+      <textarea name="customer_notes" rows="3"></textarea>
+
+      <button type="submit">Book Now</button>
+    </form>
+
+    <div class="success" style="display:none;">✅ Booking submitted successfully!</div>
+    <div class="error" style="display:none;">❌ Failed to submit booking. Try again.</div>
+  </div>
+
+  <script>
+    emailjs.init("-kBM5dG1uVjBmD-_-");
+
+    document.getElementById("booking-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const form = this;
+
+      emailjs.sendForm("service_gii8a6h", "template_booking", form)
+        .then(function() {
+          document.querySelector(".success").style.display = "block";
+          document.querySelector(".error").style.display = "none";
+          form.reset();
+        }, function(error) {
+          console.error("EmailJS Error:", error);
+          document.querySelector(".success").style.display = "none";
+          document.querySelector(".error").style.display = "block";
+        });
+    });
+  </script>
+</body>
+</html>
