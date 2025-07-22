@@ -24,18 +24,19 @@ const R = async (T) => {
     customer_notes: g.notes,
   };
 
-  try {
-    await emailjs.send(
-      "service_gii8a6h",
-      "template_booking",
-      bookingData,
-      "-kBM5dG1uVjBmD-_-"
-    );
-    alert(`✅ Booking confirmed! We'll contact you at ${g.phone} to confirm your appointment on ${a} at ${c}.`);
-  } catch (error) {
-    console.error("❌ Failed to send email:", error);
-    alert("Something went wrong while submitting your booking. Please try again.");
-  }
+ try {
+  await emailjs.send(
+    "service_gii8a6h",
+    "template_booking",
+    bookingData,
+    "-kBM5dG1uVjBmD-_-"
+  );
+  alert("✅ Booking confirmed! Check your email.");
+} catch (error) {
+  console.error("❌ Failed to send email:", error); // ← نطبع الخطأ هنا
+  alert("❌ Email failed to send. Check console.");
+}
+
 
   r("");
   o("");
